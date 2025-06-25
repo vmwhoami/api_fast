@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from . import schemas
 from typing import Optional
-from pydantic import BaseModel
-import uvicorn
+
+# import uvicorn
 
 app = FastAPI()
 
@@ -20,16 +21,10 @@ def unpublished():
 @app.get("/blog/{id}")
 def read_item(id: int):
     return {"data": {"id": id}}
-
-class Blog(BaseModel):
-    title: str
-    body: str
-    published: Optional[bool]
-
-@app.post("/blog")
  
-def create_blog(request: Blog):
-    return {"data": f"The blog title is {request.title}"}
+@app.post("/blog")
+def create(request: schemas.Blog):
+    return {"data": f"The blog title is {request.title} {request.body}"}
 
 
 # DEBUGING PURPOSE ONLY

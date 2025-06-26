@@ -7,8 +7,8 @@ from .api import register_routes
 
 app = FastAPI()
 
-"""" Only uncomment below to create new tables,
+""" Only uncomment below to create new tables,
 otherwise the tests will fail if not connected
-""""
+"""
 
 # Base.metadata.create_all(bind=engine)

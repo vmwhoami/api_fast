@@ -1,27 +1,17 @@
-FROM python:3-slim-bullseye
-
- 
-WORKDIR /app
-
-# Debug: Show what files Docker can see
-RUN echo "=== Docker build context contents ==="
-COPY . /tmp/debug/
-RUN ls -la /tmp/debug/
-RUN echo "=== Looking for requirements.txt ==="
-RUN find /tmp/debug/ -name "requirements.txt"
-
-# Try to copy requirements.txt
-COPY requirements.txt .
-RUN echo "=== Successfully copied requirements.txt ==="
-RUN ls -la requirements.txt
+# Build stage
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install packages directly (no venv needed)
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN echo "=== Looking for requirements.txt ==="
-RUN find /tmp/debug/ -name "requirements.txt"
-COPY ./app ./app
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Copy the project files
+COPY src/ src/
+
+# Expose the port FastAPI runs on
+EXPOSE 8000
+
+# Run the FastAPI application
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

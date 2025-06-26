@@ -14,7 +14,7 @@ def get_user_by_id(db: Session, user_id: UUID) -> model.User:
     logging.info(f"Successfully retrieved user with ID: {user_id}")
     return user
 
-def change_password(db: Session, user_id: UUID, password_change: models.PasswordChange) -> None:
+def change_password(db: Session, user_id: UUID, password_change: model.PasswordChange) -> None:
     try:
         user = get_user_by_id(db, user_id)
 

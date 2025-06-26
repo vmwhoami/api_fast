@@ -1,12 +1,13 @@
-from src_exceptions import UserNotFoundError, InvalidPasswordError, PasswordMismatchError
-from src.auth.service import verify_password, get_password_hash
-import logging
 from uuid import UUID
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
 from . import model
-from .model import User
+from src.entities.user import User
+from src.exceptions import UserNotFoundError, InvalidPasswordError, PasswordMismatchError
+from src.auth.service import verify_password, get_password_hash
+import logging
 
-def get_user_by_id(db: Session, user_id: UUID) -> model.User:
+def get_user_by_id(db: Session, user_id: UUID) -> model.UserResponse:
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         logging.warning(f"User not found with ID: {user_id}")

@@ -2,7 +2,7 @@ from fastapi import APIRouter, status
 from uuid import UUID
 
 from ..database.core import DbSession
-from . import models
+from . import model
 from . import service
 from ..auth.service import CurrentUser
 
@@ -11,7 +11,7 @@ router = APIRouter(
     tags=["users"]
 )
 
-@router.get("/me", response_model=models.UserResponse)
+@router.get("/me", response_model=model.UserResponse)
 def get_current_user(
     current_user: CurrentUser,
     db: DbSession
@@ -20,7 +20,7 @@ def get_current_user(
 
 @router.put("/change_password", status_code=status.HTTP_200_OK)
 def change_password(
-    password_change: models.PasswordChange,
+    password_change: model.PasswordChange,
     db: DbSession,
     current_user: CurrentUser
 ):

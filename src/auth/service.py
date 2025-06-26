@@ -46,7 +46,7 @@ def verify_token(token: str) -> model.TokenData:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get('id')
-        return models.TokenData(user_id=user_id)
+        return model.TokenData(user_id=user_id)
     except PyJWTError as e:
         logging.warning(f"Token verification failed: {str(e)}")
         raise AuthenticationError()
@@ -79,4 +79,4 @@ def login_for_access_token(
     if not user:
         raise AuthenticationError()
     token = create_access_token(user.email, user.id, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    return models.Token(access_token=token, token_type='bearer')
+    return model.Token(access_token=token, token_type='bearer')

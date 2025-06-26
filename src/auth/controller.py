@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, Request
 from starlette import status
-from . import models
+from . import model
 from . import service
 from fastapi.security import OAuth2PasswordRequestForm
 from ..database.core import DbSession
@@ -17,11 +17,11 @@ router = APIRouter(
 async def register_user(
     request: Request,
     db: DbSession,
-    register_user_request: models.RegisterUserRequest
+    register_user_request: model.RegisterUserRequest
 ):
     service.register_user(db, register_user_request)
 
-@router.post("/token", response_model=models.Token)
+@router.post("/token", response_model=model.Token)
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: DbSession

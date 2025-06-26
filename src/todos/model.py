@@ -7,7 +7,7 @@ from src.entities.todo import Priority
 class TodoBase(BaseModel):
     description: str
     due_date: Optional[datetime] = None
-    priority: Priority = Priority.MEDIUM
+    priority: Priority = Priority.Medium
 
 class TodoCreate(TodoBase):
     pass
@@ -20,3 +20,4 @@ class TodoResponse(TodoBase):
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+ 

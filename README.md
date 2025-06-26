@@ -10,6 +10,6 @@
 ## Run the app comand
 
 ```
- uvicorn app.main:app --reload
+uvicorn src.main:app --reload
 ```
 

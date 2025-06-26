@@ -32,6 +32,6 @@ def update_todo(db: DbSession, todo_id: UUID, todo_update: model.TodoUpdate, cur
 def complete_todo(db: DbSession, todo_id: UUID, current_user: CurrentUser):
     return service.complete_todo(current_user, db, todo_id)
 
-@router.delete("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)  # Fixed "NQ_CONTENT" to "NO_CONTENT"
+@router.delete("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_todo(db: DbSession, todo_id: UUID, current_user: CurrentUser):
     service.delete_todo(current_user, db, todo_id)

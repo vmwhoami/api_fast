@@ -61,4 +61,22 @@ async def test_register_user(db_session):
     assert user.first_name == "New"
     assert user.last_name == "User"
 
+def test_create_and_verify_token(db_session):
+    user_id = uuid4()
+    token = auth_service.create_access_token("test@example.com", user_id, timedelta(minutes=30))
+
+    token_data = auth_service.verify_token(token)
+    assert token_data.get_uuid() == user_id
+
+    # Test invalid credentials
+    assert auth_service.authenticate_user("test@example.com", "wrongpassword", db_session) is False
+
+    with pytest.raises(AuthenticationError):
+        form_data = OAuth2PasswordRequestForm(
+            username="test@example.com",
+            password="wrongpassword",
+            scope=""
+        )
+        auth_service.login_for_access_token(form_data, db_session)
+
  

@@ -1,3 +1,4 @@
+# model.py
 from typing import Annotated
 from fastapi import APIRouter, Depends, Request
 from starlette import status

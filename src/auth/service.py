@@ -1,3 +1,4 @@
+# src/auth/service.py
 from datetime import timedelta, datetime, timezone
 from typing import Annotated
 from uuid import UUID, uuid4

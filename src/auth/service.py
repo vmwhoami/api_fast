@@ -13,12 +13,13 @@ from . import model
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from ..exceptions import AuthenticationError
 import logging
-
+from dotenv import load_dotenv
+load_dotenv()
 # You would want to store this in an environment variable or a secret manager
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM =  os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+SECRET_KEY = "197xec37c391bed854e80344fe73b806947a65eu6206e05a1a23c2fa12702fe3"
+ALGORITHM = 'HS256'
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -80,5 +81,12 @@ def login_for_access_token(
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise AuthenticationError()
-    token = create_access_token(user.email, user.id, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    
+    # Convert environment variable to integer
+    expire_minutes = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+    token = create_access_token(
+        user.email, 
+        user.id, 
+        timedelta(minutes=expire_minutes)  # Use converted integer here
+    )
     return model.Token(access_token=token, token_type='bearer')

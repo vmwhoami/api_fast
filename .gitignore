@@ -19,7 +19,7 @@ __pycache__/
 # Specific directories
 src/__pycache__/
 src/auth/__pycache__/
-
+src/todos/__pycache__/
 # General development artifacts
 *.log
 *.sqlite3

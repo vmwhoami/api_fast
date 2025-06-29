@@ -5,6 +5,8 @@ from .entities.user import User
 from .api import register_routes
 import os
 from .logging import configure_logging, LogLevels
+from dotenv import load_dotenv
+load_dotenv()
 
 configure_logging(LogLevels.info)
 app = FastAPI()
@@ -13,7 +15,7 @@ app = FastAPI()
 otherwise the tests will fail if not connected
 """
 # Auto-create tables only in development
-if os.getenv("ENVIRONMENT", "production") == "development":
-    Base.metadata.create_all(bind=engine)
+# if os.getenv("ENVIRONMENT", "production") == "development":
+# Base.metadata.create_all(bind=engine)
 
 register_routes(app)
